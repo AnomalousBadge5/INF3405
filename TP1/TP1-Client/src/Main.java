@@ -30,6 +30,7 @@ public class Main {
 			case "UDP" :
 				// Initilisation connexion client
 				// create datagramSocket and datagramPacket
+				System.out.println("Connecting to server");
 				ds = new DatagramSocket(5022, ip.ipAdressInet);
 				choiceAction.Choose();
 				packet = new DatagramPacket(choiceAction.choice.getBytes(), choiceAction.choice.getBytes().length, ip.ipAdressInet, 5022);
@@ -39,11 +40,12 @@ public class Main {
 				
 				break;
 			case "TCP" :
+				System.out.println("Connecting to server");
 				socket = new Socket(ip.ipAdressInet, 5023);
 				choiceAction.Choose();
 				
 				break;
-			case "exit" :
+			case "EXIT" :
 				end = true;
 				break;
 			}
@@ -51,7 +53,7 @@ public class Main {
 		System.out.print("\nYour IP adress: ");
 		Socket s = new Socket("www.google.com", 80);
 		System.out.println(s.getLocalAddress().getHostAddress());
-		System.out.print("\n");		System.out.println(s.getLocalAddress().getHostName());
+		System.out.print("\n");
 		s.close();
 	}
 

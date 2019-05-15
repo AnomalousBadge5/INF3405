@@ -15,8 +15,8 @@ public class ChoiceProtocol {
 		{
 			System.out.printf("Please choose the communication protocol:\n");
 			choice = scanner.nextLine();
-			System.out.print(choice);
-			if (choice.contentEquals("UDP") || choice.contentEquals("TCP") || choice.contentEquals("exit"))
+			choice = choice.toUpperCase();
+			if (choice.contentEquals("UDP") || choice.contentEquals("TCP") || choice.contentEquals("EXIT"))
 			{
 				choiceIsOk = true;
 			}

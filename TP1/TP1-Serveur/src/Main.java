@@ -7,8 +7,10 @@ import java.net.DatagramSocket;
 public class Main {
 	public static void main(String[] args) throws Exception
 	{
+		Socket s = new Socket("www.google.com", 80);
 		System.out.printf("Ip address :");
-		System.out.println(InetAddress.getLocalHost());
+		System.out.println(s.getLocalAddress().getHostAddress());
+		s.close();
 		// protocol udp
 		ListFolderUDP listFolderUDP = new ListFolderUDP();
 		DatagramSocket server = new DatagramSocket(5022);
@@ -35,5 +37,6 @@ public class Main {
 		{
 			
 		}
+		server.close();
 	}
 }

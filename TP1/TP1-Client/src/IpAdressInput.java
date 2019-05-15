@@ -6,9 +6,8 @@ public class IpAdressInput
 	String ipAdress = "";
 	public static final int ipAdressLength = 4;
 
-	public String getIpAdress()
+	public String getIpAdress(Scanner scanner)
 	{
-		Scanner scanner = new Scanner(System.in);
 		boolean ipIsOk = false;
 		while(!ipIsOk)
 		{
@@ -28,7 +27,6 @@ public class IpAdressInput
 				}
 			}
 		}
-		scanner.close();
 		return ipAdress;
 	}
 }

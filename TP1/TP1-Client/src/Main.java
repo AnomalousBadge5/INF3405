@@ -3,14 +3,18 @@ import java.net.Socket;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress; 
+import java.util.Scanner;
+
 // Port UDP 5022
 public class Main {
 
 	public static void main(String[] args) throws Exception
 	{
+		Scanner scanner = new Scanner(System.in);
 		IpAdressInput input = new IpAdressInput();
 		// todo: mettre ca dans une classe -- complete
-		IpAddress ip = new IpAddress(input.getIpAdress(), InetAddress.getByName(input.getIpAdress()));
+		String ipString = input.getIpAdress(scanner);
+		IpAddress ip = new IpAddress(ipString, InetAddress.getByName(ipString));
 		ChoiceProtocol choiceProtocol = new ChoiceProtocol();
 		ChoiceAction choiceAction = new ChoiceAction();
 		boolean end = false;
@@ -20,7 +24,7 @@ public class Main {
 		DatagramPacket packet;
 		while (!end)
 		{
-			choiceProtocol.Choose();
+			choiceProtocol.Choose(scanner);
 			switch (choiceProtocol.choice)
 			{
 			case "UDP" :
@@ -44,13 +48,10 @@ public class Main {
 				break;
 			}
 		}
-		System.out.print("Your IP adress is valid: ");
-		System.out.print(ip.ipAdressString);
 		System.out.print("\nYour IP adress: ");
 		Socket s = new Socket("www.google.com", 80);
 		System.out.println(s.getLocalAddress().getHostAddress());
-		System.out.print("\n");
-		System.out.println(s.getLocalAddress().getHostName());
+		System.out.print("\n");		System.out.println(s.getLocalAddress().getHostName());
 		s.close();
 	}
 

@@ -24,9 +24,8 @@ public class ChoiceAction {
 		}
 		return isCorrect;
 	}
-	public void Choose()
+	public void Choose(Scanner scanner)
 	{
-		Scanner scanner = new Scanner(System.in);
 		boolean choiceIsOk = false;
 		while(!choiceIsOk)
 		{
@@ -41,6 +40,5 @@ public class ChoiceAction {
 				choiceIsOk = true;
 			}
 		}
-		scanner.close();
 	}
 }

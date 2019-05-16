@@ -11,31 +11,41 @@ public class Main {
 		System.out.printf("Ip address :");
 		System.out.println(s.getLocalAddress().getHostAddress());
 		s.close();
-		// protocol udp
-		ListFolderUDP listFolderUDP = new ListFolderUDP();
 		DatagramSocket server = new DatagramSocket(5022);
-		DatagramPacket packetRecieve = null;
-		DatagramPacket packetSend = null;
-		byte[] receive = new byte [65535];
-		byte[] listFolder = null;
-		// creation of a datagramPacket to receive the data
-		packetRecieve = new DatagramPacket(receive, receive.length);
-		// receive data in byte buffer
-		// blocking call
-		server.receive(packetRecieve);
-		// display
-		Date date = new Date();
-		System.out.printf("[" + packetRecieve.getAddress() + ":" + packetRecieve.getPort() + " - " + date.getDate() + "]: " + packetRecieve.getData());
-		if (packetRecieve.getData().toString().equals("ls"))
+		boolean continuer = true;
+		// protocol udp
+		while (continuer)
 		{
-			listFolder = new String(listFolderUDP.getListFolderUDP()).getBytes();
-			packetSend = new DatagramPacket(listFolder, listFolder.length, packetRecieve.getAddress(), packetRecieve.getPort());
-			server.send(packetSend);
-			packetSend.setLength(listFolder.length);
-		}
-		else if (true) // Case Download
-		{
-			
+			ListFolderUDP listFolderUDP = new ListFolderUDP();
+			DatagramPacket packetRecieve = null;
+			DatagramPacket packetSend = null;
+			byte[] receive = new byte [65535];
+			byte[] listFolder = null;
+			// creation of a datagramPacket to receive the data
+			packetRecieve = new DatagramPacket(receive, receive.length);
+			// receive data in byte buffer
+			// blocking call
+			server.receive(packetRecieve);
+			// display
+			GetDate date = new GetDate();
+			String datastr = new String(packetRecieve.getData(),0,packetRecieve.getData().length);
+			datastr = datastr.replace("\0", "");
+			System.out.printf("[" + packetRecieve.getAddress() + ":" + packetRecieve.getPort() + " - " + date.getDate() + "]: " + datastr + "\n");
+			if (datastr.contentEquals("ls"))
+			{
+				listFolder = new String(listFolderUDP.getListFolderUDP()).getBytes();
+				packetSend = new DatagramPacket(listFolder, listFolder.length, packetRecieve.getAddress(), packetRecieve.getPort());
+				server.send(packetSend);
+				packetSend.setLength(listFolder.length);
+			}
+			else if (datastr.contentEquals("back")) // Case back
+			{
+				
+			}
+			else // case download
+			{
+				
+			}
 		}
 		server.close();
 	}

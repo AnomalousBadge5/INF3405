@@ -38,7 +38,7 @@ public class UDPServerManager {
 			byte[] data = new String(listFolderUDP.getListFolderUDP()).getBytes();
 			this.sendData(client, data);
 		}
-		else if(action.contains("downoad"))
+		else if(action.contains("download"))
 		{
 			String[] list = action.split(" ");
 			String fileName = list[1];

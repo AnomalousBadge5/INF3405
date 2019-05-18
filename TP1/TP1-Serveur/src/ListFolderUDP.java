@@ -29,14 +29,16 @@ public class ListFolderUDP {
 	
 	public byte[] getBytesFromFile(String fileName) throws Exception
 	{
-		 FileInputStream file = new FileInputStream(fileName);
-		 byte[] data = new byte[1024];
-		 int i = 0;
-		 while(file.available() != 0)
-		 {
-			 data[i++] = (byte)file.read();
-		 }
-		 file.close();
-		 return data;
+		String filePath = "./udp/" + fileName;
+		File file = new File(filePath);
+		FileInputStream stream = new FileInputStream(filePath);
+		byte[] data = new byte[(int) file.length()];
+		int i = 0;
+		while(stream.available() != 0)
+		{
+				data[i++] = (byte)stream.read();
+		}
+		stream.close();
+		return data;
 	}
 }

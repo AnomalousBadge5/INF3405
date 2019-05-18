@@ -31,7 +31,7 @@ public class UDPManager
 		{
 			FileManager fileManager = new FileManager();
 			String message = "File transfer ";
-			message += fileManager.writeByteArray(data) ? "successful" : "failed";
+			message += fileManager.writeByteArray(receivedBytes) ? "successful" : "failed";
 			System.out.println(message);
 		}
 	}
@@ -42,11 +42,16 @@ public class UDPManager
 		this.datagramSocket.send(packet);
 	}
 	
-	public byte[] receiveData() throws Exception
+	public byte[] receiveData(int length) throws Exception
 	{
-		byte[] data = new byte[2000];
+		byte[] data = new byte[length];
 		DatagramPacket packet = new DatagramPacket(data, data.length);
 		this.datagramSocket.receive(packet);
 		return packet.getData();
+	}
+	
+	public byte[] receiveData() throws Exception
+	{
+		return this.receiveData(2000);
 	}
 }

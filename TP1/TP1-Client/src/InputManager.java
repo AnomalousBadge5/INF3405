@@ -25,8 +25,7 @@ public class InputManager {
 	
 	public String chooseAction()
 	{
-		this.choiceAction.Choose(scanner);
-		return this.choiceAction.choice;
+		return this.choiceAction.Choose(scanner);
 	}
 	
 }

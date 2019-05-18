@@ -25,7 +25,12 @@ public class UDPManager
 		if(action.contentEquals("ls"))
 		{
 			String dataStr = new String(receivedBytes, 0, receivedBytes.length);
+			dataStr = dataStr.replace("\0", "");
 			System.out.println(dataStr);
+		} else
+		{
+			FileManager fileManager = new FileManager();
+			fileManager.writeByteArray(data);
 		}
 	}
 	

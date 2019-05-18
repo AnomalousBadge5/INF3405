@@ -1,44 +1,28 @@
 import java.util.Scanner;
-public class ChoiceAction {
-	public String choice = new String();
-
-	public ChoiceAction() {}
-	private boolean checkIfCorrect()
+public class ChoiceAction
+{
+	private boolean checkIfCorrect(String choice)
 	{
-		boolean isCorrect = false;
-		String download = new String("download");
+		choice = choice.toLowerCase();
 		if (choice.contentEquals("ls") || choice.contentEquals("back"))
 		{
-			isCorrect = true;
+			return true;
 		}
-		else if (download.length() == choice.length())
-		{
-			isCorrect = true;
-			for (int i = 0; i < download.length(); i++)
-			{
-				if (download.getBytes()[i] != choice.getBytes()[i])
-				{
-					isCorrect = false;
-				}
-			}
-		}
-		return isCorrect;
+		String[] downloadList = choice.split(" ");
+		return (downloadList.length > 1) ? (downloadList[0].contentEquals("download")) : false;
 	}
-	public void Choose(Scanner scanner)
+
+	public String Choose(Scanner scanner)
 	{
-		boolean choiceIsOk = false;
-		while(!choiceIsOk)
+		System.out.println("Please choose what you want to do:");
+		while(true)
 		{
-			System.out.printf("Please choose what you want to do:\n");
-			choice = scanner.nextLine();
-			if (!checkIfCorrect())
+			String choice = scanner.nextLine();
+			if(this.checkIfCorrect(choice))
 			{
-				System.out.printf("Incorrect entry\nPlease choose between ls, download <file> and back\n");
+				return choice;
 			}
-			else
-			{
-				choiceIsOk = true;
-			}
+			System.out.printf("Incorrect entry\nPlease choose between ls, download <file> and back\n");
 		}
 	}
 }

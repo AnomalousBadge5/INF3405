@@ -16,6 +16,19 @@ public class UDPManager
 		this.datagramSocket = new DatagramSocket();
 	}
 	
+	public void manageAction(String action) throws Exception
+	{
+		byte[] data = action.getBytes();
+		this.sendData(data);
+		
+		byte[] receivedBytes = this.receiveData();
+		if(action.contentEquals("ls"))
+		{
+			String dataStr = new String(receivedBytes, 0, receivedBytes.length);
+			System.out.println(dataStr);
+		}
+	}
+	
 	public void sendData(byte[] data) throws Exception
 	{
 		DatagramPacket packet = new DatagramPacket(data, data.length, this.serverAddress, this.UDP_PORT);

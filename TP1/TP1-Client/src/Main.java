@@ -27,20 +27,13 @@ public class Main {
 				while(true)
 				{
 					String action = inputManager.chooseAction();
-					byte[] data = inputManager.choiceAction.choice.getBytes();
-					udpManager.sendData(data);
-					byte[] receivedBytes = udpManager.receiveData();
-					if(action.contentEquals("ls"))
-					{
-						String dataStr = new String(receivedBytes, 0, receivedBytes.length);
-						System.out.println(dataStr);
-					}
-					else if(action.contentEquals("back"))
+					if(action.contentEquals("back"))
 					{
 						break;
 					}
+					udpManager.manageAction(action);
 				}
-				
+				break;
 			case "TCP" :
 				System.out.println("Connecting to server");
 				socket = new Socket(ip.ipAdressInet, 5023);

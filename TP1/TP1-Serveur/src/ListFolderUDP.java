@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileInputStream;
 
 public class ListFolderUDP {
 	public String send;
@@ -24,5 +25,18 @@ public class ListFolderUDP {
 			send = "empty folder";
 		}
 		return send;
+	}
+	
+	public byte[] getBytesFromFile(String fileName) throws Exception
+	{
+		 FileInputStream file = new FileInputStream(fileName);
+		 byte[] data = new byte[1024];
+		 int i = 0;
+		 while(file.available() != 0)
+		 {
+			 data[i++] = (byte)file.read();
+		 }
+		 file.close();
+		 return data;
 	}
 }

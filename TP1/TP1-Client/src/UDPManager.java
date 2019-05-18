@@ -27,10 +27,12 @@ public class UDPManager
 			String dataStr = new String(receivedBytes, 0, receivedBytes.length);
 			dataStr = dataStr.replace("\0", "");
 			System.out.println(dataStr);
-		} else
+		} else // download
 		{
 			FileManager fileManager = new FileManager();
-			fileManager.writeByteArray(data);
+			String message = "File transfer ";
+			message += fileManager.writeByteArray(data) ? "successful" : "failed";
+			System.out.println(message);
 		}
 	}
 	

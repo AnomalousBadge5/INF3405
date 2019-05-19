@@ -24,15 +24,22 @@ public class UDPDownloadManager {
 		this.packageCount = (this.downloadLength / 1000) + 1;
 		byte[] data = new byte[this.downloadLength];
 		final int MAX_PACKET_LENGTH = 1000;
+		System.out.println(this.packageCount);
+		System.out.println(this.downloadLength);
+		String start = "start";
+		DatagramPacket packet = new DatagramPacket(start.getBytes(), start.getBytes().length, this.serverAddress, this.UDP_PORT);
+		this.datagramSocket.send(packet);
 		while(this.packageCount > 0)
 		{
+			System.out.println("Waiting for package");
 			byte[] reception = this.receiveData(MAX_PACKET_LENGTH + 2 * 4);
+			System.out.println("Received package");
 			ByteBuffer packageNumberB = ByteBuffer.wrap(Arrays.copyOfRange(reception, 0, 4));
 			int packageNumber = packageNumberB.getInt();
 			ByteBuffer packageLengthB = ByteBuffer.wrap(Arrays.copyOfRange(reception, 4, 8));
 			int packageLength = packageLengthB.getInt();
 			ByteBuffer packageData = ByteBuffer.wrap(Arrays.copyOfRange(reception, 8, 8 + packageLength));
-			System.arraycopy(packageData, 0, data, packageNumber * 1000, packageLength);
+			System.arraycopy(packageData.array(), 0, data, packageNumber * 1000, packageLength);
 			packageCount--;
 		}
 		return data;

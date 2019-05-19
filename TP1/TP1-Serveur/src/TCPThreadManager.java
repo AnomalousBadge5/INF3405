@@ -3,26 +3,27 @@ import java.net.*;
 
 public class TCPThreadManager extends Thread
 {
+	public final int TCP_PORT = 5033;
 	public void run()
 	{
 		try
 		{
-			ServerSocket welcomeSocket = new ServerSocket(6789);
+			ServerSocket welcomeSocket = new ServerSocket(this.TCP_PORT);
 
 			boolean done = false;
 			while (!done)
 			{
 				Socket connectionSocket = welcomeSocket.accept();
-				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-				DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-				String clientSentence = inFromClient.readLine();
+				BufferedReader in = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+				PrintWriter out = new PrintWriter(connectionSocket.getOutputStream(), true);
+				String clientSentence = in.readLine();
 				System.out.println("Received: " + clientSentence);
 				if(clientSentence.contentEquals("back"))
 				{
 					done = true;
 				}
-				String capitalizedSentence = clientSentence.toUpperCase() + 'n';
-				outToClient.writeBytes(capitalizedSentence);
+				String capitalizedSentence = clientSentence.toUpperCase();
+				out.println(capitalizedSentence);
 			}
 			welcomeSocket.close();
 		} catch(Exception e)

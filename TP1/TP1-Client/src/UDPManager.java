@@ -20,15 +20,16 @@ public class UDPManager
 	{
 		byte[] data = action.getBytes();
 		this.sendData(data);
-		
-		byte[] receivedBytes = this.receiveData();
 		if(action.contentEquals("ls"))
 		{
+			byte[] receivedBytes = this.receiveData();
 			String dataStr = new String(receivedBytes, 0, receivedBytes.length);
 			dataStr = dataStr.replace("\0", "");
 			System.out.println(dataStr);
 		} else // download
 		{
+			UDPDownloadManager uploder = new UDPDownloadManager(this.serverAddress, this.datagramSocket);
+			byte[] receivedBytes = this.receiveData();
 			FileManager fileManager = new FileManager();
 			String message = "File transfer ";
 			message += fileManager.writeByteArray(receivedBytes) ? "successful" : "failed";

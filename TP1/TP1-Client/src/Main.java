@@ -21,8 +21,6 @@ public class Main {
 			switch (protocol)
 			{
 			case "UDP" :
-				// Initilisation connexion client
-				// create datagramSocket and datagramPacket
 				UDPManager udpManager = new UDPManager(ip.ipAdressInet);
 				while(true)
 				{
@@ -35,10 +33,16 @@ public class Main {
 				}
 				break;
 			case "TCP" :
-				System.out.println("Connecting to server");
-				socket = new Socket(ip.ipAdressInet, 5023);
-				inputManager.chooseAction();;
-				
+				TCPManager tcpManager = new TCPManager(ip.ipAdressInet);
+				while(true)
+				{
+					String action = inputManager.chooseAction();
+					if(action.contentEquals("back"))
+					{
+						break;
+					}
+					tcpManager.manageAction(action);
+				}
 				break;
 			case "EXIT" :
 				end = true;

@@ -22,7 +22,7 @@ public class UploadManager {
 		byte[] reception = this.receiveData();
 		String receptionStr = new String(reception, 0, reception.length);
 		receptionStr = receptionStr.replace("\0", "");
-		if(receptionStr.contentEquals("start"))
+		if(!receptionStr.contentEquals("start"))
 		{
 			return;
 		}
@@ -66,7 +66,7 @@ public class UploadManager {
 		byte[] messageLength = ByteBuffer.allocate(INT_SIZE).putInt(packetSize).array();
 		System.arraycopy(position, 0, dataToSend, 0, INT_SIZE);
 		System.arraycopy(messageLength, 0, dataToSend, INT_SIZE, INT_SIZE);
-		System.arraycopy(Arrays.copyOfRange(this.data, i * MAX_PACKET_SIZE, i * MAX_PACKET_SIZE + packetSize), 0, dataToSend, INT_SIZE * 2, dataToSend.length);
+		System.arraycopy(Arrays.copyOfRange(this.data, i * MAX_PACKET_SIZE, i * MAX_PACKET_SIZE + packetSize), 0, dataToSend, INT_SIZE * 2, packetSize);
 		return dataToSend;
 	}
 

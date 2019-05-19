@@ -1,5 +1,7 @@
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 public class UDPServerManager {
 	private DatagramSocket server;
@@ -52,6 +54,34 @@ public class UDPServerManager {
 		DatagramPacket packet = new DatagramPacket(data, data.length, client.address, client.port);
 		this.server.send(packet);
 	}
+	
+	public void sendMultiplePackages(Client client, byte[] data) throws Exception
+	{
+		final int MAX_PACKET_SIZE = 1000;
+		int packetSize = MAX_PACKET_SIZE;
+		for(int i = 0; i * MAX_PACKET_SIZE <= data.length; i++)
+		{
+			if(i * MAX_PACKET_SIZE < data.length)
+			{
+				packetSize = data.length % MAX_PACKET_SIZE;
+			}
+			byte[] dataToSend = this.makePackage(i, packetSize, MAX_PACKET_SIZE, data);
+			this.sendData(client, dataToSend);
+		}
+	}
+	
+	private byte[] makePackage(int i, int packetSize, int MAX_PACKET_SIZE, byte[] data)
+	{
+		final int INT_SIZE = 4;
+		byte[] dataToSend = new byte[INT_SIZE + INT_SIZE + packetSize];
+		byte[] position = ByteBuffer.allocate(INT_SIZE).putInt(i).array();
+		byte[] messageLength = ByteBuffer.allocate(INT_SIZE).putInt(packetSize).array();
+		System.arraycopy(position, 0, dataToSend, 0, INT_SIZE);
+		System.arraycopy(messageLength, 0, dataToSend, INT_SIZE, INT_SIZE);
+		System.arraycopy(Arrays.copyOfRange(data, i * MAX_PACKET_SIZE, i * MAX_PACKET_SIZE + packetSize), 0, dataToSend, INT_SIZE * 2, dataToSend.length);
+		return dataToSend;
+	}
+
 	
 	private void printClientDemand(Client client, String demand)
 	{

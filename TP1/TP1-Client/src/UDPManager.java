@@ -28,8 +28,8 @@ public class UDPManager
 			System.out.println(dataStr);
 		} else // download
 		{
-			UDPDownloadManager uploder = new UDPDownloadManager(this.serverAddress, this.datagramSocket);
-			byte[] receivedBytes = this.receiveData();
+			UDPDownloadManager uploader = new UDPDownloadManager(this.serverAddress, this.datagramSocket);
+			byte[] receivedBytes = uploader.manageDownload();
 			FileManager fileManager = new FileManager();
 			String message = "File transfer ";
 			message += fileManager.writeByteArray(receivedBytes) ? "successful" : "failed";

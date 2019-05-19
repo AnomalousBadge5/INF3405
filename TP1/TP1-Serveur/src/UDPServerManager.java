@@ -12,17 +12,12 @@ public class UDPServerManager {
 	public void startServer() throws Exception
 	{
 		boolean continuer = true;
-		// protocol udp
 		while (continuer)
 		{
 			DatagramPacket packetRecieve = null;
 			byte[] receive = new byte [65535];
-			// creation of a datagramPacket to receive the data
 			packetRecieve = new DatagramPacket(receive, receive.length);
-			// receive data in byte buffer
-			// blocking call
 			this.server.receive(packetRecieve);
-			// display
 			String dataStr = this.getDataFromPacket(packetRecieve);
 			Client client = new Client(packetRecieve.getAddress(), packetRecieve.getPort());
 			this.printClientDemand(client, dataStr);

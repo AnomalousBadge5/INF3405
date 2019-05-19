@@ -3,7 +3,9 @@ public class Main {
 	public static void main(String[] args) throws Exception
 	{
 		AddressFinder.findOwnAddress();
-		UDPServerManager udpServer = new UDPServerManager();
-		udpServer.startServer();
+		UDPThread udp = new UDPThread();
+		udp.start();
+		TCPThreadManager tcp = new TCPThreadManager();
+		tcp.start();
 	}
 }

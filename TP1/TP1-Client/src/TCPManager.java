@@ -13,11 +13,11 @@ public class TCPManager {
 	public void manageAction(String action) throws Exception
 	{
 		  String modifiedSentence;
-		  Socket clientSocket = new Socket("localhost", 6789);
-		  DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-		  BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		  outToServer.writeBytes(action);
-		  modifiedSentence = inFromServer.readLine();
+		  Socket clientSocket = new Socket(this.serverAddress.getHostAddress(), this.TCP_PORT);
+		  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+		  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		  out.println(action);
+		  modifiedSentence = in.readLine();
 		  System.out.println("FROM SERVER: " + modifiedSentence);
 		  clientSocket.close();
 

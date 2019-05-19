@@ -47,9 +47,9 @@ public class UploadManager {
 	{
 		final int MAX_PACKET_SIZE = 1000;
 		int packetSize = MAX_PACKET_SIZE;
-		for(int i = 0; i * MAX_PACKET_SIZE <= this.data.length; i++)
+		for(int i = 0; i * MAX_PACKET_SIZE < this.data.length; i++)
 		{
-			if(i * MAX_PACKET_SIZE < this.data.length)
+			if((i + 1) * MAX_PACKET_SIZE > this.data.length)
 			{
 				packetSize = this.data.length % MAX_PACKET_SIZE;
 			}

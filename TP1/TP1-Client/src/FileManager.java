@@ -3,9 +3,10 @@ import java.io.FileOutputStream;
 
 public class FileManager {
 	
-	public boolean writeByteArray(byte[] data)
+	public boolean writeByteArray(byte[] data, String nameFile)
 	{
-		try (FileOutputStream stream = new FileOutputStream("./test.txt")) {
+		// Changes for file's name
+		try (FileOutputStream stream = new FileOutputStream(nameFile)) {
 		    stream.write(data);
 		} catch(Exception e)
 		{

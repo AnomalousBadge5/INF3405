@@ -32,7 +32,9 @@ public class UDPManager
 			byte[] receivedBytes = uploader.manageDownload();
 			FileManager fileManager = new FileManager();
 			String message = "File transfer ";
-			message += fileManager.writeByteArray(receivedBytes) ? "successful" : "failed";
+			String[] list = action.split(" ");
+			String fileName = ".'\'udp'\'" + list[1]; // Add
+			message += fileManager.writeByteArray(receivedBytes, fileName) ? "successful" : "failed";
 			System.out.println(message);
 		}
 	}

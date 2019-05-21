@@ -18,7 +18,7 @@ public class TCPManager {
 		  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		  out.println(action);
 		  modifiedSentence = in.readLine();
-		  System.out.println("FROM SERVER: " + modifiedSentence);
+		  System.out.print("FROM SERVER: " + modifiedSentence);
 		  clientSocket.close();
 
 	}

@@ -9,12 +9,10 @@ public class TCPConnectionManager {
 	public BufferedReader in;
 	public DataOutputStream dOut;
 	public PrintWriter out;
-	
+	public Socket socket;
 	public TCPConnectionManager(ServerSocket server) throws Exception
 	{
-		// Le serveur ne recoit jamais la demande de socket
-		Socket socket = server.accept();
-		System.out.println("command recieve");
+		this.socket = server.accept();
 		this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		this.out = new PrintWriter(socket.getOutputStream(), true);
 		this.dOut = new DataOutputStream(socket.getOutputStream());

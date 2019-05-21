@@ -14,7 +14,9 @@ public class TCPThreadManager extends Thread
 			{
 				TCPConnectionManager connection = new TCPConnectionManager(serverSocket);
 				String clientSentence = connection.receive();
-				System.out.println("Received: " + clientSentence);
+				GetDate date = new GetDate();
+				Client client = new Client(connection.socket.getInetAddress(), connection.socket.getPort());
+				System.out.println("[" + client.address + ":" + client.port + " - " + date.getDate() + "]: " + clientSentence);
 				serverSocket.getLocalPort();
 				if(clientSentence.contentEquals("back"))
 				{

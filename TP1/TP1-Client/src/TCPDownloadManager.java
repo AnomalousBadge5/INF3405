@@ -20,9 +20,10 @@ public class TCPDownloadManager
 			response += in.readLine();
 		}
 		byte[] data = response.getBytes();
+		System.out.println(data.length);
 		FileManager fileManager = new FileManager();
 		String message = "File transfer ";
-		fileName = ".\\tcp\\" + fileName;
+		fileName = "./tcp/" + fileName;
 		message += fileManager.writeByteArray(data, fileName) ? "successful" : "failed";
 		System.out.println(message);
 	}

@@ -33,7 +33,7 @@ public class UDPManager
 			FileManager fileManager = new FileManager();
 			String message = "File transfer ";
 			String[] list = action.split(" ");
-			String fileName = ".\\udp\\" + list[1]; // Add
+			String fileName = "./udp/" + list[1]; // Add
 			message += fileManager.writeByteArray(receivedBytes, fileName) ? "successful" : "failed";
 			System.out.println(message);
 		}

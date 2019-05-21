@@ -31,8 +31,9 @@ public class TCPThreadManager extends Thread
 				{
 					String[] list = clientSentence.split(" ");
 					String fileName = list[1];
-					byte[] dataStr = listFolderTCP.getBytesFromFileTCP(fileName);
-					connection.out.println(dataStr);
+					byte[] data = listFolderTCP.getBytesFromFileTCP(fileName);
+					connection.dOut.writeInt(data.length);
+					connection.dOut.write(data);
 				}
 				
 			}

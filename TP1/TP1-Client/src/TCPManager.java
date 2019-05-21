@@ -15,6 +15,7 @@ public class TCPManager {
 		  Socket clientSocket = new Socket(this.serverAddress.getHostAddress(), this.TCP_PORT);
 		  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 		  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		  DataInputStream dIn = new DataInputStream(clientSocket.getInputStream());
 		  out.println(action);
 		  if(action.contentEquals("ls"))
 		  {
@@ -26,7 +27,7 @@ public class TCPManager {
 		  }
 		  else if(action.contains("download"))
 		  {
-			  TCPDownloadManager downloadManager = new TCPDownloadManager(out, in);
+			  TCPDownloadManager downloadManager = new TCPDownloadManager(out, dIn);
 			  String fileName = action.split(" ")[1];
 			  out.println(action);
 			  downloadManager.manageDownload(fileName);

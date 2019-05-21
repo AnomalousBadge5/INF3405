@@ -15,6 +15,7 @@ public class TCPThreadManager extends Thread
 				TCPConnectionManager connection = new TCPConnectionManager(serverSocket);
 				String clientSentence = connection.receive();
 				System.out.println("Received: " + clientSentence);
+				serverSocket.getLocalPort();
 				if(clientSentence.contentEquals("back"))
 				{
 					done = true;

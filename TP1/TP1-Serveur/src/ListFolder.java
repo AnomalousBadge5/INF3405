@@ -61,15 +61,10 @@ public class ListFolder {
 	{
 		String filePath = "./tcp/" + fileName;
 		File file = new File(filePath);
-		FileInputStream stream = new FileInputStream(filePath);
-		byte[] data = new byte[(int) file.length()];
-		int i = 0;
-		while(stream.available() != 0)
-		{
-				data[i++] = (byte)stream.read();
-		}
-		stream.close();
+		byte[] data = Files.readAllBytes(file.toPath());
+		
 		String dataStr = new String(data);
+		System.out.println(dataStr.length());
 		return dataStr;
 	}
 }

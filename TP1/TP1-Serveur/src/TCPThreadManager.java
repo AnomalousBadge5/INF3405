@@ -8,7 +8,7 @@ public class TCPThreadManager extends Thread
 		try
 		{
 			ServerSocket serverSocket = new ServerSocket(this.TCP_PORT);
-
+			ListFolder listFolderTCP = new ListFolder();
 			boolean done = false;
 			while (!done)
 			{
@@ -19,8 +19,14 @@ public class TCPThreadManager extends Thread
 				{
 					done = true;
 				}
-				String capitalizedSentence = clientSentence.toUpperCase();
-				connection.send(capitalizedSentence);
+				else if ((clientSentence.contentEquals("ls")))
+				{			
+					String listFolder = listFolderTCP.getListFolderTCP();
+					String[] list = listFolder.split("\n");
+					connection.send(Integer.toString(list.length));
+					connection.send(listFolder);
+				}
+				
 			}
 			serverSocket.close();
 		} catch(Exception e)

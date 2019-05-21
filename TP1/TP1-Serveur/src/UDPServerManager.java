@@ -37,7 +37,7 @@ public class UDPServerManager {
 		{
 			String[] list = action.split(" ");
 			String fileName = list[1];
-			byte[] data = listFolderUDP.getBytesFromFile(fileName);
+			byte[] data = listFolderUDP.getBytesFromFileUDP(fileName);
 			UploadManager uploader = new UploadManager(client, data, this.server);
 			uploader.upload();
 		}

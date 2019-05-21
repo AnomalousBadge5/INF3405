@@ -26,6 +26,15 @@ public class TCPThreadManager extends Thread
 					connection.send(Integer.toString(list.length));
 					connection.send(listFolder);
 				}
+				else if (clientSentence.contains("download"))
+				{
+					String[] list = clientSentence.split(" ");
+					String fileName = list[1];
+					String dataStr = listFolderTCP.getBytesFromFileTCP(fileName);
+					String[] listData = dataStr.split("\n");
+					connection.send(Integer.toString(listData.length));
+					connection.send(dataStr);
+				}
 				
 			}
 			serverSocket.close();

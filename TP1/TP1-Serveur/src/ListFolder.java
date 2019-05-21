@@ -1,9 +1,9 @@
 import java.io.File;
 import java.io.FileInputStream;
 
-public class ListFolderUDP {
+public class ListFolder {
 	public String send;
-	public ListFolderUDP()
+	public ListFolder()
 	{
 		send = "";
 	}
@@ -26,6 +26,27 @@ public class ListFolderUDP {
 		}
 		return send;
 	}
+	
+	public String getListFolderTCP()
+	{
+		File repertory = new File("./tcp");
+		String list[] = repertory.list();
+		send = new String();
+		if (list != null)
+		{
+			send = "";
+			for (String each : list)
+			{
+				send += "[File]" + each + "\n";
+			}
+		}
+		else
+		{
+			send = "empty folder";
+		}
+		return send;
+	}
+	
 	
 	public byte[] getBytesFromFile(String fileName) throws Exception
 	{

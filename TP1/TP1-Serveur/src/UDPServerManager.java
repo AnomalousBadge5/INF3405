@@ -27,7 +27,7 @@ public class UDPServerManager {
 	
 	public void manageAction(Client client, String action) throws Exception
 	{
-		ListFolderUDP listFolderUDP = new ListFolderUDP();
+		ListFolder listFolderUDP = new ListFolder();
 		if (action.contentEquals("ls"))
 		{
 			byte[] data = new String(listFolderUDP.getListFolderUDP()).getBytes();

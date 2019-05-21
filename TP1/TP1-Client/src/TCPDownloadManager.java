@@ -13,13 +13,7 @@ public class TCPDownloadManager
 	}
 	public void manageDownload(String fileName) throws Exception
 	{
-		int lines = Integer.parseInt(in.readLine());
-		String response = "";
-		for(int i = 0; i < lines; i++)
-		{
-			response += in.readLine();
-		}
-		byte[] data = response.getBytes();
+		byte[] data = in.readLine().getBytes();
 		System.out.println(data.length);
 		FileManager fileManager = new FileManager();
 		String message = "File transfer ";

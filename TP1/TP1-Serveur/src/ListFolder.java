@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.nio.file.Files;
 
 public class ListFolder {
@@ -57,14 +58,11 @@ public class ListFolder {
 		return data;
 	}
 	
-	public String getBytesFromFileTCP(String fileName) throws Exception
+	public byte[] getBytesFromFileTCP(String fileName) throws Exception
 	{
 		String filePath = "./tcp/" + fileName;
 		File file = new File(filePath);
 		byte[] data = Files.readAllBytes(file.toPath());
-		
-		String dataStr = new String(data);
-		System.out.println(dataStr.length());
-		return dataStr;
+		return data;
 	}
 }

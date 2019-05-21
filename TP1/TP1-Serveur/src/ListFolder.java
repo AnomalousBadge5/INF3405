@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Files;
 
 public class ListFolder {
 	public String send;
@@ -9,7 +10,7 @@ public class ListFolder {
 	}
 	public String getListFolderUDP()
 	{
-		File repertory = new File(".\\udp");
+		File repertory = new File("./udp");
 		String list[] = repertory.list();
 		send = new String();
 		if (list != null)
@@ -50,23 +51,15 @@ public class ListFolder {
 	
 	public byte[] getBytesFromFileUDP(String fileName) throws Exception
 	{
-		String filePath = ".\\udp\\" + fileName;
+		String filePath = "./udp/" + fileName;
 		File file = new File(filePath);
-		FileInputStream stream = new FileInputStream(filePath);
-		byte[] data = new byte[(int) file.length()];
-		int i = 0;
-		while(stream.available() != 0)
-		{
-				data[i++] = (byte)stream.read();
-		}
-		System.out.print(data.length);
-		stream.close();
+		byte[] data = Files.readAllBytes(file.toPath());
 		return data;
 	}
 	
 	public String getBytesFromFileTCP(String fileName) throws Exception
 	{
-		String filePath = ".\\tcp\\" + fileName;
+		String filePath = "./tcp/" + fileName;
 		File file = new File(filePath);
 		FileInputStream stream = new FileInputStream(filePath);
 		byte[] data = new byte[(int) file.length()];

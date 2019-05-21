@@ -37,6 +37,7 @@ public class Main {
 				while(true)
 				{
 					String action = inputManager.chooseAction();
+					System.out.println("command send");
 					if(action.contentEquals("back"))
 					{
 						break;

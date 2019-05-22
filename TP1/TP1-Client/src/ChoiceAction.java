@@ -9,7 +9,7 @@ public class ChoiceAction
 			return true;
 		}
 		String[] downloadList = choice.split(" ");
-		return (downloadList.length > 1) ? (downloadList[0].contentEquals("download")) : false;
+		return (downloadList.length == 2) ? (downloadList[0].contentEquals("download")) : false;
 	}
 
 	public String Choose(Scanner scanner)

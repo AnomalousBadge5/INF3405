@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-public class TCPManager {
+public class TCPManager implements ProtocolInterface {
 	public final int TCP_PORT = 5033;
 	public InetAddress serverAddress;
 

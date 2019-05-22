@@ -1,4 +1,5 @@
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.PrintWriter;
 
 public class TCPDownloadManager
@@ -18,10 +19,9 @@ public class TCPDownloadManager
 		{
 			byte[] data = new byte[length];
 			in.readFully(data, 0, length);
-			System.out.println(data.length);
 			FileManager fileManager = new FileManager();
 			String message = "File transfer ";
-			fileName = "./tcp/" + fileName;
+			fileName = "." + File.separator + "tcp" + File.separator + fileName;
 			message += fileManager.writeByteArray(data, fileName) ? "successful" : "failed";
 			System.out.println(message);
 		}

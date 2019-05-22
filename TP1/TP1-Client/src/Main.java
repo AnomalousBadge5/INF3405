@@ -11,40 +11,23 @@ public class Main {
 		InputManager inputManager = new InputManager(scanner);
 		String serverAddressStr = inputManager.inputIpAdress();
 		IpAddress ip = new IpAddress(serverAddressStr, InetAddress.getByName(serverAddressStr));
-		boolean end = false;
-		while (!end)
+		while (true)
 		{
 			String protocol = inputManager.chooseProtocol();
-			switch (protocol)
+			if(!protocol.toLowerCase().contentEquals("tcp") && !protocol.toLowerCase().contentEquals("udp"))
 			{
-			case "UDP" :
-				UDPManager udpManager = new UDPManager(ip.ipAdressInet);
-				while(true)
+				return;
+			}
+			ProtocolInterface protocolManager = (protocol == "tcp") ? protocolManager = new TCPManager(ip.ipAdressInet)
+				: new UDPManager(ip.ipAdressInet);
+			while(true)
+			{
+				String action = inputManager.chooseAction();
+				if(action.contentEquals("back"))
 				{
-					String action = inputManager.chooseAction();
-					if(action.contentEquals("back"))
-					{
-						break;
-					}
-					udpManager.manageAction(action);
+					break;
 				}
-				break;
-			case "TCP" :
-				TCPManager tcpManager = new TCPManager(ip.ipAdressInet);
-				while(true)
-				{
-					String action = inputManager.chooseAction();
-					System.out.println("command send");
-					if(action.contentEquals("back"))
-					{
-						break;
-					}
-					tcpManager.manageAction(action);
-				}
-				break;
-			case "EXIT" :
-				end = true;
-				break;
+				protocolManager.manageAction(action);
 			}
 		}
 	}

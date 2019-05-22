@@ -20,12 +20,12 @@ public class InputManager {
 	public String chooseProtocol()
 	{
 		this.choiceProtocol.Choose(scanner);
-		return this.choiceProtocol.choice;
+		return this.choiceProtocol.choice.toLowerCase();
 	}
 	
 	public String chooseAction()
 	{
-		return this.choiceAction.Choose(scanner);
+		return this.choiceAction.Choose(scanner).toLowerCase();
 	}
 	
 }

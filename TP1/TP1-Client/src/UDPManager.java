@@ -1,10 +1,11 @@
 
+import java.io.File;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.DatagramSocket;
 
 
-public class UDPManager
+public class UDPManager implements ProtocolInterface
 {
 	public final int UDP_PORT = 5022;
 	public InetAddress serverAddress;
@@ -33,7 +34,7 @@ public class UDPManager
 			FileManager fileManager = new FileManager();
 			String message = "File transfer ";
 			String[] list = action.split(" ");
-			String fileName = "./udp/" + list[1]; // Add
+			String fileName = "." + File.separator + "udp" + File.separator + list[1];
 			message += fileManager.writeByteArray(receivedBytes, fileName) ? "successful" : "failed";
 			System.out.println(message);
 		}

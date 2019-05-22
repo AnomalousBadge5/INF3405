@@ -1,22 +1,15 @@
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
 
 public class ListFolder {
-	public String send;
-	public ListFolder()
+	
+	public String getListFolder(String folder)
 	{
-		send = "";
-	}
-	public String getListFolderUDP()
-	{
-		File repertory = new File("./udp");
+		File repertory = new File("." + File.separator + folder);
 		String list[] = repertory.list();
-		send = new String();
+		String send = "";
 		if (list != null)
 		{
-			send = "";
 			for (String each : list)
 			{
 				send += "[File]" + each + "\n";
@@ -29,38 +22,9 @@ public class ListFolder {
 		return send;
 	}
 	
-	public String getListFolderTCP()
+	public byte[] getBytesFromFile(String fileName, String folder) throws Exception
 	{
-		File repertory = new File("./tcp");
-		String list[] = repertory.list();
-		send = new String();
-		if (list != null)
-		{
-			send = "";
-			for (String each : list)
-			{
-				send += "[File]" + each + "\n";
-			}
-		}
-		else
-		{
-			send = "empty folder";
-		}
-		return send;
-	}
-	
-	
-	public byte[] getBytesFromFileUDP(String fileName) throws Exception
-	{
-		String filePath = "./udp/" + fileName;
-		File file = new File(filePath);
-		byte[] data = Files.readAllBytes(file.toPath());
-		return data;
-	}
-	
-	public byte[] getBytesFromFileTCP(String fileName) throws Exception
-	{
-		String filePath = "./tcp/" + fileName;
+		String filePath = "." + File.separator + folder + File.separator + fileName;
 		File file = new File(filePath);
 		byte[] data = Files.readAllBytes(file.toPath());
 		return data;

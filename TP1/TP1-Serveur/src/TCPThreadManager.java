@@ -2,38 +2,36 @@ import java.net.*;
 
 public class TCPThreadManager extends Thread
 {
-	public final int TCP_PORT = 5033;
+	public static final int PORT = 5033;
 	public void run()
 	{
 		try
 		{
-			ServerSocket serverSocket = new ServerSocket(this.TCP_PORT);
+			ServerSocket serverSocket = new ServerSocket(TCPThreadManager.PORT);
 			ListFolder listFolderTCP = new ListFolder();
 			boolean done = false;
 			while (!done)
 			{
 				TCPConnectionManager connection = new TCPConnectionManager(serverSocket);
-				String clientSentence = connection.receive();
-				GetDate date = new GetDate();
-				Client client = new Client(connection.socket.getInetAddress(), connection.socket.getPort());
-				System.out.println("[" + client.address + ":" + client.port + " - " + date.getDate() + "]: " + clientSentence);
+				String action = connection.receive();
+				DemandPrinter.printDemand(new Client(connection.socket.getInetAddress(), connection.socket.getPort()), action);
 				serverSocket.getLocalPort();
-				if(clientSentence.contentEquals("back"))
+				if(action.contentEquals("back"))
 				{
 					done = true;
 				}
-				else if ((clientSentence.contentEquals("ls")))
+				else if ((action.contentEquals("ls")))
 				{			
-					String listFolder = listFolderTCP.getListFolderTCP();
+					String listFolder = listFolderTCP.getListFolder("tcp");
 					String[] list = listFolder.split("\n");
 					connection.send(Integer.toString(list.length));
 					connection.send(listFolder);
 				}
-				else if (clientSentence.contains("download"))
+				else if (action.contains("download") && action.split(" ").length == 2)
 				{
-					String[] list = clientSentence.split(" ");
+					String[] list = action.split(" ");
 					String fileName = list[1];
-					byte[] data = listFolderTCP.getBytesFromFileTCP(fileName);
+					byte[] data = listFolderTCP.getBytesFromFile(fileName, "tcp");
 					connection.dOut.writeInt(data.length);
 					connection.dOut.write(data);
 				}

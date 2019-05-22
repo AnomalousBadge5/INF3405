@@ -1,5 +1,4 @@
 
-import java.net.Socket;
 import java.net.InetAddress; 
 import java.util.Scanner;
 
@@ -12,8 +11,6 @@ public class Main {
 		InputManager inputManager = new InputManager(scanner);
 		String serverAddressStr = inputManager.inputIpAdress();
 		IpAddress ip = new IpAddress(serverAddressStr, InetAddress.getByName(serverAddressStr));
-		// menu principal
-		Socket socket;
 		boolean end = false;
 		while (!end)
 		{

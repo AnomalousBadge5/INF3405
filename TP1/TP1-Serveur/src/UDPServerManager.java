@@ -3,24 +3,24 @@ import java.net.DatagramSocket;
 
 public class UDPServerManager {
 	private DatagramSocket server;
+	private static final int PORT = 5022;
 	
 	public UDPServerManager() throws Exception
 	{
-		server = new DatagramSocket(5022);
+		server = new DatagramSocket(UDPServerManager.PORT);
 	}
 	
 	public void startServer() throws Exception
 	{
-		boolean continuer = true;
-		while (continuer)
+		while (true)
 		{
 			DatagramPacket packetRecieve = null;
 			byte[] receive = new byte [65535];
 			packetRecieve = new DatagramPacket(receive, receive.length);
 			this.server.receive(packetRecieve);
-			String dataStr = this.getDataFromPacket(packetRecieve);
+			String dataStr = this.getStringFromPacket(packetRecieve);
 			Client client = new Client(packetRecieve.getAddress(), packetRecieve.getPort());
-			this.printClientDemand(client, dataStr);
+			DemandPrinter.printDemand(client, dataStr);
 			this.manageAction(client, dataStr);
 		}
 	}
@@ -30,14 +30,14 @@ public class UDPServerManager {
 		ListFolder listFolderUDP = new ListFolder();
 		if (action.contentEquals("ls"))
 		{
-			byte[] data = new String(listFolderUDP.getListFolderUDP()).getBytes();
+			byte[] data = new String(listFolderUDP.getListFolder("udp")).getBytes();
 			this.sendData(client, data);
 		}
-		else if(action.contains("download"))
+		else if(action.contains("download") && action.split(" ").length == 2)
 		{
 			String[] list = action.split(" ");
 			String fileName = list[1];
-			byte[] data = listFolderUDP.getBytesFromFileUDP(fileName);
+			byte[] data = listFolderUDP.getBytesFromFile(fileName, "udp");
 			UploadManager uploader = new UploadManager(client, data, this.server);
 			uploader.upload();
 		}
@@ -48,14 +48,8 @@ public class UDPServerManager {
 		DatagramPacket packet = new DatagramPacket(data, data.length, client.address, client.port);
 		this.server.send(packet);
 	}
-	
-	private void printClientDemand(Client client, String demand)
-	{
-		GetDate date = new GetDate();
-		System.out.printf("[" + client.address + ":" + client.port + " - " + date.getDate() + "]: " + demand + "\n");
-	}
-	
-	private String getDataFromPacket(DatagramPacket packet)
+		
+	private String getStringFromPacket(DatagramPacket packet)
 	{
 		String datastr = new String(packet.getData(), 0, packet.getData().length);
 		return datastr.replace("\0", "");
